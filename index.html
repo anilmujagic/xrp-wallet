@@ -87,6 +87,14 @@
                 sendTx.disabled = false;
             }
         }
+
+        function generateAccount() {
+            // Generate a brand new key pair locally (nothing is sent over the network)
+            const wallet = xrpl.Wallet.generate();
+            document.getElementById("address").value = wallet.classicAddress;
+            document.getElementById("privateKey").value = wallet.seed;
+            document.getElementById("newAccount").style.display = "block";
+        }
     </script>
 </head>
 <body>
@@ -109,5 +117,24 @@
     </form>
 
     <p id="resultMsg"></p>
+
+    <hr>
+
+    <h2>New Account</h2>
+
+    <p>
+        Generate a brand new account. Save the private key, fund the address (it is not active on the
+        ledger until it holds the base reserve), then use the private key above to send XRP.
+    </p>
+
+    <button id="generate" type="button" onclick="generateAccount()">Generate New</button>
+
+    <div id="newAccount" style="display: none;">
+        <label for="address">Account Address</label><br>
+        <input id="address" type="text" readonly><br>
+
+        <label for="privateKey">Private Key</label><br>
+        <input id="privateKey" type="text" readonly><br>
+    </div>
 </body>
 </html>
